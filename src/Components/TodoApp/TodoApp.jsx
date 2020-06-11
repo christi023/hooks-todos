@@ -1,7 +1,6 @@
 import React from 'react';
-// Custom Hook
-import useTodoState from '../../Hooks/useTodoState';
-
+// import Provider
+import { TodosProvider } from '../../context/todos.context';
 // material ui core
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -13,12 +12,6 @@ import TodoList from '../TodoList/TodoList';
 import TodoForm from '../TodoForm/TodoForm';
 
 function TodoApp() {
-  // saving todos
-  const initialTodos = [{ id: 1, task: 'Pet a Monkey', completed: false }];
-  /*JSON.parse(window.localStorage.getItem('todos') || '[]');*/
-  // bring over from useTodoState methods
-  const { todos, addTodo, removeTodo, toggleTodo, editTodo } = useTodoState(initialTodos);
-
   return (
     <Paper
       style={{ padding: 0, margin: 0, height: '100vh', backgroundColor: '#fafafa' }}
@@ -31,13 +24,10 @@ function TodoApp() {
       </AppBar>
       <Grid container justify="center" style={{ marginTop: '1rem' }}>
         <Grid item xs={11} md={8} lg={4}>
-          <TodoForm addTodo={addTodo} />
-          <TodoList
-            todos={todos}
-            removeTodo={removeTodo}
-            toggleTodo={toggleTodo}
-            editTodo={editTodo}
-          />
+          <TodosProvider>
+            <TodoForm />
+            <TodoList />
+          </TodosProvider>
         </Grid>
       </Grid>
     </Paper>
